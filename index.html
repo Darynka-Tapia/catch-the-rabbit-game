@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch the rabbit</title>
+  <style>
+    body{
+      margin: 0;
+      width: 100%;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      counter-reset: RabbitGame;
+    }
+    .header{
+      display: grid;
+      justify-content: center;
+      margin-top: 40px;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      z-index: 11;
+    }
+    .header p{
+      margin: 0;
+      text-align: center;
+      color: #BE624C;
+    }
+    .header p.title{
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .header p.subtitle{
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .phone{
+      border: 8px solid black; 
+      position: relative;
+      border-radius: 40px;
+      height: 600px;
+      width: 300px;
+      background-color: #ccefff;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+      overflow: hidden;
+    }
+    .layer-1{
+      position: absolute;
+      z-index: 1;
+      height: 450px;
+      width: 80px;
+      background-color: transparent;
+      bottom: 0;
+      right: 60px;
+      border-radius: 20px 20px 0 0;
+      animation-name: layer;
+      animation-duration: 5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .layer-2{
+      position: absolute;
+      z-index: 1;
+      height: 450px;
+      width: 80px;
+      background-color: transparent;
+      bottom: 0;
+      left: 60px;
+      border-radius: 20px 20px 0 0;
+      animation-name: layer;
+      animation-duration: 2s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .layer-3{
+      position: absolute;
+      z-index: 2;
+      height: 380px;
+      width: 220px;
+      background-color: #BE624C;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+      border-top: 20px solid #51AF5E;
+      overflow: hidden;
+    }
+    .layer-4{
+      position: absolute;
+      z-index: 3;
+      height: 350px;
+      width: 80px;
+      background-color: transparent;
+      bottom: 0;
+      left: 20px;
+      border-radius: 20px 20px 0 0;
+      animation-name: layer;
+      animation-duration: 4s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .layer-5{
+      position: absolute;
+      z-index: 4;
+      height: 280px;
+      width: 200px;
+      background-color: #BE624C;
+      bottom: 0;
+      left: 0;
+      margin: 0 auto;
+      border-top: 20px solid #51AF5E;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+    .layer-6{
+      position: absolute;
+      z-index: 5;
+      height: 250px;
+      width: 80px;
+      background-color: transparent;
+      bottom: 0;
+      right: 30px;
+      border-radius: 20px 20px 0 0;
+      animation-name: layer;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    .layer-7{
+      position: absolute;
+      z-index: 6;
+      height: 180px;
+      width: 140px;
+      background-color: #BE624C;
+      bottom: 0;
+      right: 0;
+      margin: 0 auto;
+      border-top: 20px solid #51AF5E;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+    .layer-8{
+      position: absolute;
+      z-index: 7;
+      height: 120px;
+      width: 200px;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      border-radius: 20px 20px 0 0;
+    }
+    .layer-9{
+      position: absolute;
+      z-index: 8;
+      height: 75px;
+      width: 100px;
+      bottom: 0;
+      right: 0;
+      border-radius: 20px 20px 0 0;
+    }
+    .layer-10{
+      position: absolute;
+      z-index: 8;
+      height: 75px;
+      width: 100px;
+      bottom: 0;
+      left: 0;
+      border-radius: 20px 20px 0 0;
+    }
+    @keyframes layer {
+      0% {
+        bottom: 0;
+      }
+      50% {
+        bottom: -60px;
+      }
+      100% {
+        bottom: 0;
+      }
+    }
+    .phone-lens{
+      position: absolute;
+      z-index: 9;
+      height: 14px;
+      width: 80px;
+      background-color: #000;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border-radius: 0 0 20px 20px ;
+    }
+    .left-ear--outer{
+      position: absolute;
+      background-color: white;
+      border-radius: 90%;
+      width: 20px;
+      height: 50px;
+      left: 10px;
+    }
+    .left-ear--inner{
+      position: absolute;
+      background-color: pink;
+      border-radius: 40%;
+      width: 10px;
+      height: 50px;
+      left: 15px;
+      top: 8px;
+    }
+
+    .right-ear--outer{
+      position: absolute;
+      background-color: white;
+      border-radius: 90%;
+      width: 20px;
+      height: 50px;
+      right: 10px;
+    }
+    .right-ear--inner{
+      position: absolute;
+      background-color: pink;
+      border-radius: 40%;
+      width: 10px;
+      height: 50px;
+      right: 15px;
+      top: 8px;
+    }
+    .head{
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      width: 80px;
+      height: 60px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      top: 30px;
+    }
+    .head__eye{
+      background-color: gray;
+      border-radius: 50%;
+      width: 4px;
+      height: 4px;
+      position: absolute;
+      top: 15px;
+      animation-name: blink;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+    @keyframes blink{
+      0% {
+        height: 4px;
+      }
+      5%{
+        transform: translate(0px, 2px);
+        height: 1px;
+      }
+      10%{
+        transform: translate(0px, 0px);
+        height: 4px;
+      }
+
+    }
+
+    .head__eye--left{
+      left: 28px;
+    }
+    .head__eye--right{
+      right: 28px;
+    }
+    .zig-zag{
+      position: absolute;
+      height: 38px;
+      width: 100%;
+      background-color: #A54A38;
+      top: 0;
+      background: linear-gradient(135deg, #51AF5E 25%, transparent 25%) -20px 0,
+        linear-gradient(-135deg, #51AF5E 25%, transparent 25%) -20px 0,
+        linear-gradient(45deg, #BE624C 25%, transparent 25%),
+        linear-gradient(-45deg, transparent 25%, #A54A38 25%);
+      background-size: 40px 40px;
+    }
+    .circle-1{
+      position: absolute;
+      background-color: #3b6b42;
+      height: 120px;
+      width: 80px;
+      top: 20px;
+      border-radius: 100px 50px 10px 40px;
+      rotate: -20deg;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+      
+      animation-name: wind;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+    .circle-2{
+      position: absolute;
+      background-color: #3b6b42;
+      height: 120px;
+      width: 80px;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border-radius: 60px 80px 10px 10px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+      animation-name: wind;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+    .circle-3{
+      position: absolute;
+      background-color: #3b6b42;
+      height: 150px;
+      width: 80px;
+      top: 35px;
+      right: 10px;
+      border-radius: 100px 50px 10px 40px;
+      rotate: 20deg;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+      animation-name: wind;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+    }
+    .cloud-top--left{
+      background-color: white;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 50% 50% 0 0 ;
+      height: 75px;
+      width: 60px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+    .cloud-bottom--left{
+      background-color: white;
+      position: absolute;
+      bottom: -40px;
+      right: 0;
+      border-radius: 100% ;
+      height: 80px;
+      width: 90px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+
+    .cloud-top--right{
+      background-color: white;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border-radius: 50% 50% 0 0 ;
+      height: 75px;
+      width: 60px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+    .cloud-bottom--right{
+      background-color: white;
+      position: absolute;
+      bottom: -40px;
+      right: 0;
+      border-radius: 100% ;
+      height: 80px;
+      width: 90px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+
+    input[type=checkbox]{
+      appearance: none;
+      cursor: pointer;
+      height: 50px;
+      position: absolute;
+      top: 0;
+      width: 80px;
+      z-index: 2;
+    }
+    input:checked{
+      counter-increment: RabbitGame;
+    }
+    .header p.subtitle::after{
+      content: counter(RabbitGame);
+    }
+    .total-count::before{
+      content: counter(RabbitGame);
+    }
+    [class^="layer"]:has(input:checked) {
+      animation: none;
+    }
+
+    .congratulations{
+      background-color: rgba(204, 239, 255,0.5); /*  rgba(222, 184, 135,0.5);#CCEFFF; */
+      position: absolute;
+      width: 100%;
+      height: 200px;
+      z-index: 12;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      font-weight: 600;
+      bottom: 0;
+      opacity: 0;
+
+      transition-property: opacity;
+      transition-duration: 3s;
+    }
+    .congratulations .title{
+      position: absolute;
+      top: 90px;
+      filter: drop-shadow(1px 2px 2px #000);
+      background-color: #CCEFFF;
+      padding: 0 8px;
+    }
+    .congratulations .hand{
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      border-radius: 50%;
+      background-color: white;
+      z-index: 1;
+      top: 104px;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3), 0 15px 12px rgba(0, 0, 0,0.2);
+    }
+    .congratulations .hand--left{
+      left: 120px;
+      transform: rotate(-12deg);
+    }
+    .congratulations .hand--right{
+      right: 120px;
+      transform: rotate(12deg);
+    }
+    .congratulations .hand .dedo-1{
+      height: 4px;
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid gray;
+      background-color: white;
+      bottom: 0px;
+      left: 4px;
+    }
+    .congratulations .hand .dedo-2{
+      height: 4px;
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid gray;
+      background-color: white;
+      bottom: 0px;
+      right: 4px;
+    }
+
+    @keyframes wind {
+      0% {
+        transform: translate(0px, 0px) ;
+      }
+      10% {
+        transform: translate(4px, 4px) ;
+      }
+      15%{
+        transform: translate(8px, 8px) ;
+      }
+    }
+
+    .allRabbit{
+      width: 80px;
+      height: 200px;
+      position: absolute;
+      top: 10px;
+    }
+    .allRabbit .head__nose{
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      background-color: gray;
+      top: 30px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      transform: rotate(45deg);
+      border-radius: 10px 1px 2px 1px;
+    }
+    .head__mouth{
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid gray;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .head__mouth--left{
+      left: 31px;
+      top: 33px;
+    }
+    .head__mouth--right{
+      right: 31px;
+      top: 33px;
+    }
+    .allRabbit .head{
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3);
+    }
+    .body{
+      position: absolute;
+      background-color: white;
+      border-radius: 45%;
+      width: 80px;
+      height: 80px;
+      right: 0;
+      left: 0;
+      margin: 0 auto;
+      top: 80px;
+      z-index: -1 ;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3);
+    }
+    .foot{
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      top: 140px;
+      border-radius: 50%;
+      background-color: white;
+      box-shadow: 0 19px 38px rgba(0, 0, 0,0.3);
+    }
+    .foot--left{
+      left: 0px;
+      animation: footLeft 2s infinite;
+    }
+    .foot--right{
+      right: 0px;
+      animation: footRight 2s infinite;
+    }
+
+    .huella-1{
+      width: 20px;
+      height: 16px;
+      position: absolute;
+      top: 13px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: pink;
+    }
+
+    .huella-2{
+      width: 4px;
+      height: 8px;
+      position: absolute;
+      top: 7px;
+      left: 4px;
+      border-radius: 50%;
+      background: pink;
+    }
+    .huella-3{
+      width: 4px;
+      height: 8px;
+      position: absolute;
+      top: 3px;
+      left: 13px;
+      border-radius: 50%;
+      background: pink;
+    }
+    .huella-4{
+      width: 4px;
+      height: 8px;
+      position: absolute;
+      top: 7px;
+      left: 22px;
+      border-radius: 50%;
+      background: pink;
+    }
+
+    @keyframes footLeft {
+      0% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(8deg);
+      }
+      50% {
+        transform: rotate(0deg);
+      }
+      100%{
+        transform: rotate(-8deg);
+      }
+    }
+    @keyframes footRight {
+      0% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(-8deg);
+      }
+      50% {
+        transform: rotate(0deg);
+      }
+      100%{
+        transform: rotate(8deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="layer-1">
+      <input type="checkbox" onchange="check(this)">
+      <div class="left-ear--outer"></div>
+      <div class="left-ear--inner"></div>
+      <div class="right-ear--outer"></div>
+      <div class="right-ear--inner"></div>
+      <div class="head">
+        <div class="head__eye head__eye--left"></div>
+        <div class="head__eye head__eye--right"></div>
+      </div>
+    </div>
+    <div class="layer-2">
+      <input type="checkbox" onchange="check(this)">
+      <div class="left-ear--outer"></div>
+      <div class="left-ear--inner"></div>
+      <div class="right-ear--outer"></div>
+      <div class="right-ear--inner"></div>
+      <div class="head">
+        <div class="head__eye head__eye--left"></div>
+        <div class="head__eye head__eye--right"></div>
+      </div>
+    </div>
+    <div class="layer-3">
+      <div class="zig-zag"></div>
+    </div>
+    <div class="layer-4">
+      <input type="checkbox" onchange="check(this)">
+      <div class="left-ear--outer"></div>
+      <div class="left-ear--inner"></div>
+      <div class="right-ear--outer"></div>
+      <div class="right-ear--inner"></div>
+      <div class="head">
+        <div class="head__eye head__eye--left"></div>
+        <div class="head__eye head__eye--right"></div>
+      </div>
+    </div>
+    <div class="layer-5">
+      <div class="zig-zag"></div>
+    </div>
+    <div class="layer-6">
+      <input type="checkbox" onchange="check(this)">
+      <div class="left-ear--outer"></div>
+      <div class="left-ear--inner"></div>
+      <div class="right-ear--outer"></div>
+      <div class="right-ear--inner"></div>
+      <div class="head">
+        <div class="head__eye head__eye--left"></div>
+        <div class="head__eye head__eye--right"></div>
+      </div>
+    </div>
+    <div class="layer-7">
+      <div class="zig-zag"></div>
+    </div>
+    <div class="layer-8">
+      <div class="circle-1"></div>
+      <div class="circle-2"></div>
+      <div class="circle-3"></div>
+    </div>
+    <div class="layer-9">
+      <div class="cloud-top--right"></div>
+      <div class="cloud-bottom--right"></div>
+    </div>
+    <div class="layer-10">
+      <div class="cloud-top--left"></div>
+      <div class="cloud-bottom--left"></div>
+    </div>
+    <div class="phone-lens"></div>
+    <div class="header">
+      <p class="title">Animationland</p>
+      <p class="subtitle">Score: </p>        
+    </div>
+    <div class="congratulations" id="congratulations">
+      <div class="allRabbit">
+        <div class="allHead">
+          <div class="left-ear--outer"></div>
+          <div class="left-ear--inner"></div>
+          <div class="right-ear--outer"></div>
+          <div class="right-ear--inner"></div>
+          <div class="head">
+            <div class="head__eye head__eye--left"></div>
+            <div class="head__eye head__eye--right"></div>
+            <div class="head__nose"></div>
+            <div class="head__mouth head__mouth--left"></div>
+            <div class="head__mouth head__mouth--right"></div>
+          </div>
+          <div class="body"></div>
+          <div class="foot foot--left">
+            <div class="huella-1"></div>
+            <div class="huella-2"></div>
+            <div class="huella-3"></div>
+            <div class="huella-4"></div>
+          </div>
+          <div class="foot foot--right">
+            <div class="huella-1"></div>
+            <div class="huella-2"></div>
+            <div class="huella-3"></div>
+            <div class="huella-4"></div>
+          </div>
+        </div>
+      </div>
+      <div class="hand hand--left">
+        <div class="dedo-1"></div>
+        <div class="dedo-2"></div>
+      </div>
+      <div class="hand hand--right">
+        <div class="dedo-1"></div>
+        <div class="dedo-2"></div>
+      </div>
+      <p class="title">Congratulations!</p>   
+    </div>
+  </div>
+  <script>
+    let count = 0
+    function check(element) {
+      if( !element.checked ) return;
+      
+      element.disabled = true;
+      count++;
+      if(count === 4){
+        const messageContain = document.getElementById('congratulations')
+        messageContain.style.opacity = '1';
+        console.log('Great!', messageContain);
+      }
+    }
+
+  </script>
+</body>
+</html>
